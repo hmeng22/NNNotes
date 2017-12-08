@@ -1,6 +1,6 @@
 git add .
 
-msg="rebuilding site `date`"
+msg="commit `date`"
 if [ $# -eq 1 ]
   then msg="$1"
 fi
