@@ -1,0 +1,46 @@
+\documentclass[12pt,a4paper]{article}
+\setlength\parindent{0pt}
+\thispagestyle{empty}
+
+\begin{document}
+
+\setcounter{secnumdepth}{0}
+\section{Back Propagation}
+
+$w_{ji}^l$ Weight from the i neuron in the l-1 layer to the j neuron in the l layer. \\
+$b_j^l$ Bias from the j neuron in the l layer. \\
+
+$a_j^l$ Activation from the j neuron in the l layer. \\
+$a_j^l = \sum_{i} w_{ji}^l a_i^{l-1} + b_j^l = \sigma(z_j^l)$ \\
+$a^l = w^l a^{l-1} + b^l = \sigma(z^l)$ \\
+
+
+Cost function : $C = \frac{1}{2n} \sum_{i} (target_i - a_i^L)^2$ \\
+Cost function derivative : $\frac{\partial C}{\partial a_i^L} = (a_i^L - target_i)$ \\
+
+
+$\frac{\partial C}{\partial w}$ and $\frac{\partial C}{\partial b}$ represent how quickly Cost function changes with respect to weight w and bias b. Back Propagation is to relate $\delta^l_i$ to $\frac{\partial C}{\partial w}$ and $\frac{\partial C}{\partial b}$. \\
+
+$delta^l_i$ Error in the i neuron in the l layer. \\
+
+BP1 : $\delta _i^L = \frac{\partial C}{\partial a_i^L} \sigma'(z_i^L) = (a_i^L - target_i) \sigma'(z_i^L)$ \\
+Matrix : $\delta ^L = \nabla _a C \odot \sigma'(z^L) = (a^L - target) \odot \sigma'(z^L)$ \\
+
+BP2 : $\delta _i^l = \frac{\partial C}{\partial z_i^l} = \sum_{j} \frac{\partial C}{\partial z_j^{l+1}} \frac{\partial z_j^{l+1}}{\partial z_i^l} = \sum_{j} \delta _j^{l+1} \frac{\partial z_j^{l+1}}{\partial z_i^l} = \sum_{j} \delta _j^{l+1} w_{ji}^{l+1} \sigma '(z_i^l)$ \\
+$( \frac{\partial z_j^{l+1}}{\partial z_i^l} = w_{ji}^{l+1} \sigma '(z_j^l) )$ \\
+
+BP1 compute the error in L layer, then apply BP2 to compute the layers back through. \\
+
+
+BP3 : $\frac{\partial C}{\partial b_i^l} = \delta _i^l$ \\
+Matrix : $\frac{\partial C}{\partial b} = \delta$ \\
+
+BP4 : $\frac{\partial C}{\partial w_{ji}^l} = a_i^{l-1} \delta _j^l$ \\
+Matrix : $\frac{\partial C}{\partial w} = a_{in} \delta _{out}$ \\
+$a_{in}$ is the activation of the neuron input to the weight, and $\delta _{out}$ is the error of the neuron output from the weight. \\
+
+
+update weights according to $w^l = w^l - \frac{\partial C}{\partial w_i_j^l}$. \\
+update biases according to $b^l = b^l - \frac{\partial C}{\partial b_i^l}$. \\
+
+\end{document}
