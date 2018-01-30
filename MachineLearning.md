@@ -337,6 +337,28 @@ GoogleLeNet (2014)
 ResidualNet (2015)
 ```
 
+```
+AlexNet
+
+- ReLu instead of Sigmoid : Sigmoid will cause Vanishing Gradient Problem due to the vanished updates to the weights in the saturating caused by small derivative.
+- Dropout : reduce over-fitting
+
+VGG16
+
+- Multiple 3x3 kernel-sized filters instead of 11x11 and 5x5 : multiple Receptive Field allows to learn more complex features with less parameters.
+- Blocks/Modules
+
+GoogLeNet/Inception
+
+- Refine Dense Connection Architecture by applying concept of Sparse Weight/Connection using Inception modeule (Convolute 1x1 to reduce sizes)
+- Global Average Pooling instead of Fully-Connected Layers
+- Large width and depth
+- Improve the accuracy and save on computation
+
+Residual Networks
+
+- Residual module to learn the features on top of already available input which makes sure deeper networks actually work.
+```
 
 ## Neural Networks Examples
 
@@ -356,4 +378,6 @@ Loss_style(s, o)
 
   TensorFlow
   TensorBoard
-  Magenta - Artistic Style Transfer
+
+
+### Keras
