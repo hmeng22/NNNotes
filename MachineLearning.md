@@ -310,7 +310,8 @@ Deep Learning can learn useful representations or features directly from images,
 
 ```
 RNN
-  |- Long Short Term(LSTM)
+  |- Long Short Term(LSTM) : Cell state and Hidden state.
+  |- Gated Recurrent Unit(GRU)
 ```
 
 ### GAN
