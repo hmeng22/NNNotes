@@ -1,4 +1,14 @@
+# Naive Neural Network
+# nn231 using numpy.
+
 import numpy as np
+
+def activations(t):
+    return {
+        'sigmoid': (lambda x: 1 / (1 + np.exp(-x)), lambda x: x * (1 - x), (0,  1), .45),
+        'tanh': (lambda x: np.tanh(x), lambda x: 1 - x**2, (0, -1), 0.005),
+        'ReLU': (lambda x: x * (x > 0), lambda x: x > 0, (0, 10000), 0.0005),
+    }.get(t, 'sigmoid')
 
 # inputs and outputs dataset
 # | a | b | a xor b |
@@ -11,21 +21,12 @@ training_set_length = 4
 training_set_inputs = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
 training_set_outputs = np.array([[0], [1], [1], [0]])
 
-
-def activations(t):
-    return {
-        'sigmoid': (lambda x: 1 / (1 + np.exp(-x)), lambda x: x * (1 - x), (0,  1), .45),
-        'tanh': (lambda x: np.tanh(x), lambda x: 1 - x**2, (0, -1), 0.005),
-        'ReLU': (lambda x: x * (x > 0), lambda x: x > 0, (0, 10000), 0.0005),
-    }.get(t, 'sigmoid')
-
-
-class nn231():
+class nn231_1():
 
     def __init__(self):
         self.layer_1_input, self.layer_2_hidden, self.layer_3_output = 2, 3, 1
 
-    def train_1(self):
+    def train(self):
         # number of iterations
         epochs = 60000
 
@@ -35,6 +36,7 @@ class nn231():
         # weights
         weights_12 = np.random.randn(self.layer_1_input, self.layer_2_hidden)
         weights_23 = np.random.randn(self.layer_2_hidden, self.layer_3_output)
+        
         # activation on the output layer
         for t in range(epochs):
             # feed forward
@@ -48,9 +50,18 @@ class nn231():
             weights_23 += outputs_2.T.dot(delta_outputs_3)
             weights_12 += training_set_inputs.T.dot(delta_outputs_2)
 
-        print outputs_3
+        print(outputs_3)
 
-    def train_2(self):
+nn231_1().train()
+
+
+
+class nn231_2():
+
+    def __init__(self):
+        self.layer_1_input, self.layer_2_hidden, self.layer_3_output = 2, 3, 1    
+        
+    def train(self):
         epochs = 20000
 
         # learning rate L
@@ -70,16 +81,26 @@ class nn231():
             weights_23 += outputs_2.T.dot(delta_outputs_3)
             weights_12 += training_set_inputs.T.dot(delta_outputs_2)
 
-        print outputs_3
+        print(outputs_3)
+        
+nn231_2().train()
 
-    def train_3(self):
+
+
+class nn231_3():
+
+    def __init__(self):
+        self.layer_1_input, self.layer_2_hidden, self.layer_3_output = 2, 3, 1  
+        
+    def train(self):
         epochs = 3000
 
         # mini batch size
         mini_batch_size = 1
 
         (a, a_derivative, (mina, maxa), L) = activations('sigmoid')
-
+        
+        # Normalize initial parameters
         w_bound_12 = np.sqrt(2.0 / (self.layer_1_input))
         w_bound_23 = np.sqrt(2.0 / (self.layer_2_hidden))
         weights_12 = np.random.uniform(size=(self.layer_1_input, self.layer_2_hidden), low=-w_bound_12, high=w_bound_12)
@@ -96,7 +117,7 @@ class nn231():
             epoch_cost_history = []
 
             mini_batches = [(training_set_inputs[k:k + mini_batch_size], training_set_outputs[k:k + mini_batch_size])
-                            for k in xrange(0, training_set_length, mini_batch_size)]
+                            for k in range(0, training_set_length, mini_batch_size)]
 
             # train each single mini_batch
             for (mini_batch_inputs, mini_batch_outputs) in mini_batches:
@@ -118,7 +139,6 @@ class nn231():
             mse = np.average(epoch_cost_history)
             cost_history.append(mse)
 
-        print mse
-
-
-nn231().train_3()
+        print(mse)
+        
+nn231_3().train()
