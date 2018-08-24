@@ -101,4 +101,4 @@ ENV/
 .mypy_cache/
 
 .gitignore
-./depliy.sh
+depliy.sh
